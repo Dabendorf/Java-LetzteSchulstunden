@@ -1,7 +1,16 @@
 package schulstundenCounter;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Vector;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Dies ist die Hauptklasse des Counterprojekts, welche ausrechnet, wie viele Reststunden im Abiturjahr 2016 pro Fach verbleiben.
@@ -11,6 +20,10 @@ import java.util.GregorianCalendar;
  */
 public class Counter {
 	
+	/**Frame zur Darstellung des Rests*/
+	private JFrame frame1 = new JFrame("Restliche Schulstunden");
+	/**Tabelle nach Faechern und Reststunden*/
+	private JTable tabelle1 = new JTable();
 	/**Das heutige Datum und seine berechneten Folgetage*/
 	private Calendar today = GregorianCalendar.getInstance();
 	/**Das Datum des letzten Schultags*/
@@ -19,9 +32,53 @@ public class Counter {
 	private Subject[] subjects = new Subject[11];
 	
 	public Counter() {
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.setPreferredSize(new Dimension(250,230));
+        frame1.setMinimumSize(new Dimension(250,230));
+        frame1.setMaximumSize(new Dimension(375,345));
+	    frame1.setResizable(true);
+	    
 		addSubjects();
 		calculateRest();
 		printRest();
+		sortiere();
+		
+		frame1.pack();
+	    frame1.setLocationRelativeTo(null);
+	    tabelle1.setVisible(true);
+	    frame1.getContentPane().add(new JScrollPane(tabelle1));
+	    frame1.setVisible(true);
+	}
+	
+	/**
+	 * Dieses Programm generiert die Tabelle und traegt ihre Werte entsprechend ein.
+	 */
+	private void sortiere() {
+		Vector<Object> eintraege = new Vector<Object>();
+		for(Subject sub:subjects) {
+			Vector<Object> zeile = new Vector<Object>();
+			zeile.add(sub.getName());
+			zeile.add(sub.getRest());
+			eintraege.add(zeile);
+		}
+
+		Vector<String> titel = new Vector<String>();
+		titel.add("Fach");
+		titel.add("Reststunden");
+		tabelle1 = new JTable(eintraege, titel);
+		
+		tabelle1.getColumn("Fach").setPreferredWidth(40);
+	    tabelle1.getColumn("Reststunden").setPreferredWidth(15);
+	    tabelle1.getTableHeader().setBackground(Color.lightGray);
+	    tabelle1.setEnabled(false);
+	    
+	    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+	    for(int x=0;x<tabelle1.getColumnCount();x++) {
+	    	tabelle1.getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+	    	tabelle1.getTableHeader().getColumnModel().getColumn(x).setCellRenderer(centerRenderer);
+	    }
+	    tabelle1.setDefaultRenderer(String.class, centerRenderer);
 	}
 	
 	/**
