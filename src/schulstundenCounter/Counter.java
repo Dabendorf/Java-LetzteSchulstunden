@@ -33,14 +33,13 @@ public class Counter {
 	
 	public Counter() {
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame1.setPreferredSize(new Dimension(250,230));
-        frame1.setMinimumSize(new Dimension(250,230));
-        frame1.setMaximumSize(new Dimension(375,345));
+		frame1.setPreferredSize(new Dimension(250,246));
+        frame1.setMinimumSize(new Dimension(250,246));
+        frame1.setMaximumSize(new Dimension(375,369));
 	    frame1.setResizable(true);
 	    
 		addSubjects();
 		calculateRest();
-		printRest();
 		sortiere();
 		
 		frame1.pack();
@@ -61,6 +60,10 @@ public class Counter {
 			zeile.add(sub.getRest());
 			eintraege.add(zeile);
 		}
+		Vector<Object> gesamtzeile = new Vector<Object>();
+		gesamtzeile.add("Gesamt");
+		gesamtzeile.add(printRest());
+		eintraege.add(gesamtzeile);
 
 		Vector<String> titel = new Vector<String>();
 		titel.add("Fach");
@@ -128,7 +131,7 @@ public class Counter {
 				today.add(Calendar.DAY_OF_MONTH, 14);
 				continue;
 			}
-			//System.out.println(today.getTime());
+			
 			switch(dayOfWeek) {
 		    case Calendar.MONDAY:
 		    	for(Subject s:subjects) {
@@ -173,13 +176,12 @@ public class Counter {
 	/**
 	 * Diese Methode gibt die restlichen Stundenzahlen des Schuljahres aus.
 	 */
-	private void printRest() {
+	private int printRest() {
 		int sum = 0;
 		for(Subject s:subjects) {
 			sum += s.getRest();
-			System.out.println(s);
 		}
-		System.out.println("Gesamt: "+sum);
+		return sum;
 	}
 
 	public static void main(String[] args) {
