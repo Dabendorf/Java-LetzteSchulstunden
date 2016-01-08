@@ -2,6 +2,7 @@ package schulstundenCounter;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -53,6 +54,7 @@ public class Counter {
 	 * Dieses Programm generiert die Tabelle und traegt ihre Werte entsprechend ein.
 	 */
 	private void sortiere() {
+		Arrays.sort(subjects);
 		Vector<Object> eintraege = new Vector<Object>();
 		for(Subject sub:subjects) {
 			Vector<Object> zeile = new Vector<Object>();

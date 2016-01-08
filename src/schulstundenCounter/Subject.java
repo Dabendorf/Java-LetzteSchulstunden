@@ -6,7 +6,7 @@ package schulstundenCounter;
  * @author Lukas Schramm
  * @version 1.0
  */
-public class Subject {
+public class Subject implements Comparable<Subject> {
 	
 	/**Name des Unterrichtsfachs*/
 	private String name;
@@ -67,5 +67,10 @@ public class Subject {
 
 	public int getFriday() {
 		return friday;
+	}
+
+	@Override
+	public int compareTo(Subject o) {
+		return ((Integer)o.rest).compareTo(this.rest);
 	}
 }
