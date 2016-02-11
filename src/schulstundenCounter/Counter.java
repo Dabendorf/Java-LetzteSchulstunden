@@ -2,8 +2,10 @@ package schulstundenCounter;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -107,7 +109,7 @@ public class Counter {
 	 * Diese Methode rechnet fuer jeden Tag bis zum letzten Schultag die entsprechenden Reststunden zur Liste hinzu.
 	 */
 	private void calculateRest() {
-		lastDay.set(2016, 3, 13, 23, 59);
+		lastDay.set(2016, 3, 12, 23, 59);
 		while(today.getTimeInMillis() < lastDay.getTimeInMillis()) {
 			int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 			int dateOfTheMonth = today.get(Calendar.DAY_OF_MONTH);
@@ -134,35 +136,31 @@ public class Counter {
 				continue;
 			}
 			
+			ArrayList<String> exampleSubjects = new ArrayList<String>();
+			Collections.addAll(exampleSubjects,"Sport", "Franzakisch");
+			boolean enableExample = false;
+			
+			for(Subject s:subjects) {
+				s.addRest(s.getRestOfDay(dayOfWeek));
+				if(s.getRestOfDay(dayOfWeek)>0 && (!enableExample || (enableExample && exampleSubjects.contains(s.getName())))) {
+					System.out.println(s.getName()+" ("+s.getRestOfDay(dayOfWeek)+")"+": "+today.getTime());
+				}
+			}
+			
 			switch(dayOfWeek) {
 		    case Calendar.MONDAY:
-		    	for(Subject s:subjects) {
-		    		s.addRest(s.getMonday());
-		    	}
 		    	today.add(Calendar.DAY_OF_MONTH, 1);
 		        break;
 		    case Calendar.TUESDAY:
-		    	for(Subject s:subjects) {
-		    		s.addRest(s.getTuesday());
-		    	}
 		    	today.add(Calendar.DAY_OF_MONTH, 1);
 		        break;
 			case Calendar.WEDNESDAY:
-				for(Subject s:subjects) {
-		    		s.addRest(s.getWednesday());
-		    	}
 				today.add(Calendar.DAY_OF_MONTH, 1);
 		        break;
 		    case Calendar.THURSDAY:
-		    	for(Subject s:subjects) {
-		    		s.addRest(s.getThursday());
-		    	}
 		    	today.add(Calendar.DAY_OF_MONTH, 1);
 		        break;
 		    case Calendar.FRIDAY:
-		    	for(Subject s:subjects) {
-		    		s.addRest(s.getFriday());
-		    	}
 		    	today.add(Calendar.DAY_OF_MONTH, 3);
 		        break;
 		    case Calendar.SATURDAY:

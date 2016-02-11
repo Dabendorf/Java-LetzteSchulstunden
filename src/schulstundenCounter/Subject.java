@@ -31,10 +31,16 @@ public class Subject implements Comparable<Subject> {
 		this.thursday = thursday;
 		this.friday = friday;
 	}
-
-	@Override
-	public String toString() {
-		return "Restmenge " + name + ": " + rest + "";
+	
+	public int getRestOfDay(int numOfDay) {
+		switch(numOfDay) {
+		case 2:return monday;
+		case 3:return tuesday;
+		case 4:return wednesday;
+		case 5:return thursday;
+		case 6:return friday;
+		default:return 0;
+		}
 	}
 
 	public String getName() {
@@ -47,26 +53,6 @@ public class Subject implements Comparable<Subject> {
 
 	public void addRest(int rest) {
 		this.rest += rest;
-	}
-
-	public int getMonday() {
-		return monday;
-	}
-
-	public int getTuesday() {
-		return tuesday;
-	}
-
-	public int getWednesday() {
-		return wednesday;
-	}
-
-	public int getThursday() {
-		return thursday;
-	}
-
-	public int getFriday() {
-		return friday;
 	}
 
 	@Override
