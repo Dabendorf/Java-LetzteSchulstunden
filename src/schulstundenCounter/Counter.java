@@ -115,26 +115,30 @@ public class Counter {
 			int dateOfTheMonth = today.get(Calendar.DAY_OF_MONTH);
 			int dateMonth = today.get(Calendar.MONTH);
 			int dateYear = today.get(Calendar.YEAR);
-			if(dateYear==2015 && dateMonth==11 && dateOfTheMonth>21) {
+			
+			//Pruefung von Ferientagen (Beispiel Brandenburg 2016) - BEGIN
+			if((dateYear==2015 && dateMonth==11 && dateOfTheMonth>21) || (dateYear==2016 && dateMonth==0 && dateOfTheMonth<3)) {
 				today.set(2016, 0, 3, 0, 0);
 				continue;
 			}
-			if(dateYear==2016 && dateMonth==1 && dateOfTheMonth==1) {
-				today.add(Calendar.DAY_OF_MONTH, 7);
+			if(dateYear==2016 && dateMonth==1 && dateOfTheMonth>=1 && dateOfTheMonth<8) {
+				today.set(2016, 1, 8, 0, 0);
 				continue;
 			}
-			if(dateYear==2016 && dateMonth==1 && dateOfTheMonth==17) {
+			if((dateYear==2016 && dateMonth==1 && dateOfTheMonth==17)) {
 				today.add(Calendar.DAY_OF_MONTH, 1);
 				continue;
 			}
-			if(dateYear==2016 && dateMonth==1 && dateOfTheMonth==19) {
+			if((dateYear==2016 && dateMonth==1 && dateOfTheMonth==19)) {
 				today.add(Calendar.DAY_OF_MONTH, 1);
 				continue;
 			}
-			if(dateYear==2016 && dateMonth==2 && dateOfTheMonth==21) {
-				today.add(Calendar.DAY_OF_MONTH, 14);
+			if((dateYear==2016 && dateMonth==2 && dateOfTheMonth>=21) || (dateYear==2016 && dateMonth==3 && dateOfTheMonth<4)) {
+				today.set(2016, 3, 4, 0, 0);
 				continue;
 			}
+			
+			//Pruefung von Ferientagen - END
 			
 			ArrayList<String> exampleSubjects = new ArrayList<String>();
 			Collections.addAll(exampleSubjects,"Sport", "Franzakisch");
